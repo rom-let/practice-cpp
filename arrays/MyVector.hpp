@@ -6,9 +6,10 @@
 
 
 namespace practice::array {
-  const unsigned int BASE_CAPACITY {16};
-  const unsigned int BASE_SIZE {0};
-  const unsigned int BASE_MULTIPLICATOR {2}; //maybe not useful since I aim to use bitwise operation
+  //should I write static ?
+  static const unsigned int BASE_CAPACITY {16};
+  static const unsigned int BASE_SIZE {0};
+  static const unsigned int BASE_MULTIPLICATOR {2}; //maybe useless -> use bitwise operation
 
 
 //Vector of int
@@ -30,10 +31,10 @@ signed int getValue(unsigned int index) const;
 void push(signed int item);
 void pop();
 void insert(unsigned int index,signed int item);
-void prepend(int item);
+void prepend(signed int item);
 void deleteAtIndex(unsigned int index);
-void removeItem(int item);//can remove multiple items of same value
-signed int find(int item) const; // return first index with item value
+void removeItem(signed int item);//can remove multiple items of same value
+signed int find(signed int item) const; // return first index with item value
 
 
 //protected:
@@ -41,13 +42,10 @@ signed int find(int item) const; // return first index with item value
 private:
 unsigned int capacity_{BASE_CAPACITY};
 unsigned int size_{BASE_SIZE}; 
-std::unique_ptr<int[]> data_; //array where int are stored
+std::unique_ptr<signed int[]> data_; //array where int are stored
 
 void setCapacity(unsigned int wantedCapacity);
-//resize capacity based on size
-// should it exists ?
-// sort of a check capacity
-void resizeCapacity(); //use binary calculation, log2() and bit shift
+void resizeCapacity();
 void increaseCapacity();
 void decreaseCapacity();
 bool isValidIndex(unsigned int index);
