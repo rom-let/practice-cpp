@@ -34,8 +34,8 @@ void insert(unsigned int index,signed int item);
 void prepend(signed int item);
 void deleteAtIndex(unsigned int index);
 void removeItem(signed int item);//can remove multiple items of same value
-signed int find(signed int item) const; // return first index with item value
-
+unsigned int find(signed int item) const; // return first index with item value
+void updateValue(unsigned int index, signed int item);
 
 //protected:
 
@@ -48,7 +48,7 @@ void setCapacity(unsigned int wantedCapacity);
 void resizeCapacity();
 void increaseCapacity();
 void decreaseCapacity();
-bool isValidIndex(unsigned int index);
+bool isValidIndex(unsigned int index) const;
 };
 
 }// namespace practice::array

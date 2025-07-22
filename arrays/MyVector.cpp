@@ -15,13 +15,17 @@ MyVector::MyVector(unsigned int wantedCapacity){
   MyVector::setCapacity(wantedCapacity);
   }
   data_ = std::unique_ptr<int[]>(new int[capacity_]);
-  std::cout << "Vector of capacity " <<  getCapacity() << " created";
+  std::cout << "Vector of capacity " <<  getCapacity() << " created\n";
 }
 
 MyVector::MyVector() {
   data_ = std::unique_ptr<int[]>(new int[capacity_]);
-  std::cout << "Vector of capacity " <<  getCapacity() << " created";
+  std::cout << "Vector of capacity " <<  getCapacity() << " created\n";
 } 
+
+MyVector::~MyVector(){
+  std::cout << "Vector destructed successfully \n";
+}
 
 unsigned int MyVector::getSize() const{
   return size_;
@@ -31,27 +35,36 @@ unsigned int MyVector::getCapacity() const{
   return capacity_;
 }
 
+//could be easier to read with following line
+//return size_ == 0;
 bool MyVector::isEmpty() const{
-  return (!MyVector::getSize() ? true : false);
+  return (!getSize() ? true : false);
 }
 
 //should it cares about out of bound ?
+//return size_ if out of bound
 signed int MyVector::getValue(unsigned int index) const{
   //return data_[index];
+  if(isValidIndex(index)){
   return *(data_.get() + index); // learn more about this
+  }
+  return (signed int) size_;
 }
 
 void MyVector::push(signed int item){
   size_ ++;
   resizeCapacity();
-  *(data_.get() +size_) = item;
+  // same thing as data_[size_-1] = item;
+  *(data_.get() +size_-1) = item;
 }
 
 // ways to improve
 // 1) should I erase something ? How ?
 void MyVector::pop(){
+  if(!isEmpty()){
   size_ --;
   resizeCapacity();
+  }
 }
 
 void MyVector::insert(unsigned int index, signed int item){
@@ -66,18 +79,13 @@ void MyVector::insert(unsigned int index, signed int item){
 }
 
 void MyVector::prepend(signed int item){
-  size_ ++;
-  resizeCapacity();
-  for(unsigned int i{size_-1};i > 0; i--){
-      data_[i] = data_[i-1];
-  }
-  data_[0] = item;
+  insert(0, item);
 }
 
 // ways to improve :
 // 1) should I erase the old last value of the array ? How ?
 void MyVector::deleteAtIndex(unsigned int index){
-  if(isValidIndex(index)){
+  if(isValidIndex(index) && !isEmpty()){
      for(unsigned int i {size_-1}; i > index; i--){
       data_[i-1]  = data_[i];
     }
@@ -98,16 +106,20 @@ void MyVector::removeItem(signed int item) {
 // ways to improve :
 // 1) find a better solution than returning an actual value, without making the program crash.
 // -> maybe return the last item of the list (the very end, the \0)
-signed int MyVector::find(signed int item) const{
+unsigned int MyVector::find(signed int item) const{
   for(unsigned int i {0};i < size_; i++){
     if(data_[i]== item){
       return i;
     }
   }
-  return 0;
+  return size_;
 }
 
-
+void MyVector::updateValue(unsigned int index, signed int item){
+  if(isValidIndex(index)){
+      data_[index] = item;
+  }
+}
 //private
 
 //ways to improve :
@@ -128,7 +140,7 @@ void MyVector::resizeCapacity(){
   if (size_ == capacity_){
     increaseCapacity();
   }
-  if(size_ == capacity_/BASE_MULTIPLICATOR-1 && capacity_ > BASE_CAPACITY){
+  if(capacity_ > BASE_CAPACITY && size_ == capacity_/BASE_MULTIPLICATOR-1){
     decreaseCapacity();
   }
 }
@@ -151,7 +163,8 @@ void MyVector::decreaseCapacity(){
   data_ = std::move(new_data);
 }
 
-bool MyVector::isValidIndex(unsigned int index){
+//could use ternary operator
+bool MyVector::isValidIndex(unsigned int index) const{
   if(index >= size_){
     std::cout << "Index out of bound\n" << "operantion cancelled";
     //is it good practice ?
