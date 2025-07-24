@@ -55,6 +55,8 @@ int main (/*int argc, char* argv[]*/){
   assert(testingVector.getValue(10) == 11);
   assert(testingVector.getValue(5) == 5);
 
+
+  //testing removeItem and find
   testingVector.insert(10, 5);
   testingVector.removeItem(5);
   for (signed int i {0}; i<testingVector.getSize(); i++){
@@ -62,6 +64,11 @@ int main (/*int argc, char* argv[]*/){
   }
   assert(testingVector.getValue(8) == 9);
   assert(testingVector.getValue(12) == 14);
+  testingVector.push(8);
+  assert(testingVector.find(5) == testingVector.getSize());
+  assert(testingVector.find(8) == 7);
+  assert(testingVector.find(6) == 5);
+
   return 0;
 }
 
