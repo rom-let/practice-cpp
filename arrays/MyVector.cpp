@@ -10,7 +10,7 @@ namespace practice::array{
 
 // ways to improve : 
 // 1) is it better to use getCapacity here or just capacity_ ?
-MyVector::MyVector(unsigned int wantedCapacity){
+MyVector::MyVector(signed int wantedCapacity){
   if(wantedCapacity > BASE_CAPACITY){
   MyVector::setCapacity(wantedCapacity);
   }
@@ -27,11 +27,11 @@ MyVector::~MyVector(){
   std::cout << "Vector destructed successfully \n";
 }
 
-unsigned int MyVector::getSize() const{
+signed int MyVector::getSize() const{
   return size_;
 }
 
-unsigned int MyVector::getCapacity() const{
+signed int MyVector::getCapacity() const{
   return capacity_;
 }
 
@@ -48,7 +48,7 @@ signed int MyVector::getValue(signed int index) const{
     return data_[index];
   //return *(data_.get() + index); // learn more about this
   }
-  return (signed int) size_;
+  return size_;
 }
 
 void MyVector::push(signed int item){
@@ -71,7 +71,7 @@ void MyVector::insert(signed int index, signed int item){
   if(isValidIndex(index)){
   size_ ++;
   resizeCapacity();
-  for(signed int i{(signed int)size_-1};i > index; i--){
+  for(signed int i{size_-1};i > index; i--){
       data_[i] = data_[i-1];
   }
   data_[index] = item;
@@ -106,7 +106,7 @@ void MyVector::removeItem(signed int item) {
 // ways to improve :
 // 1) find a better solution than returning an actual value, without making the program crash.
 // -> maybe return the last item of the list (the very end, the \0)
-unsigned int MyVector::find(signed int item) const{
+signed int MyVector::find(signed int item) const{
   for(signed int i {0};i < size_; i++){
     if(data_[i]== item){
       return i;
@@ -125,8 +125,8 @@ void MyVector::updateValue(signed int index, signed int item){
 //ways to improve :
 // 1) check which one is better between <<= and <<
 // 2) use divide and conquer
-void MyVector::setCapacity(unsigned int wantedCapacity){
-  unsigned int bestCapacity {1};
+void MyVector::setCapacity(signed int wantedCapacity){
+  signed int bestCapacity {1};
   //what’s best : < or <= ?
   while (bestCapacity < wantedCapacity){
     bestCapacity <<=1;
@@ -165,7 +165,7 @@ void MyVector::decreaseCapacity(){
 
 //could use ternary operator
 bool MyVector::isValidIndex(signed int index) const{
-  if((unsigned int)index >= size_){
+  if(index >= size_ || index < 0){
     std::cout << "Index out of bound\n" << "operantion cancelled" << std::endl;
     //is it good practice ?
     return false;

@@ -7,16 +7,16 @@
 
 namespace practice::array {
   //should I write static ?
-  static const unsigned int BASE_CAPACITY {16};
-  static const unsigned int BASE_SIZE {0};
-  static const unsigned int BASE_MULTIPLICATOR {2}; //maybe useless -> use bitwise operation
+  static const signed int BASE_CAPACITY {16};
+  static const signed int BASE_SIZE {0};
+  static const signed int BASE_MULTIPLICATOR {2}; //maybe useless -> use bitwise operation
 
 
 //Vector of int
 class MyVector{
 
 public:
-MyVector(unsigned int wantedCapacity);//constructor
+MyVector(signed int wantedCapacity);//constructor
 MyVector(); //= default; //default constructor
 //MyVector(const MyVector& myvector) = default; //default copy constructor
 ~MyVector(); //destructor
@@ -24,8 +24,8 @@ MyVector(MyVector&& myvector) noexcept; //move constructor
 MyVector& operator=(const MyVector& myvector);//move assignement operator
 
 
-unsigned int getSize() const;
-unsigned int getCapacity() const;
+signed int getSize() const;
+signed int getCapacity() const;
 bool isEmpty() const;
 signed int getValue(signed int index) const;
 void push(signed int item);
@@ -34,17 +34,17 @@ void insert(signed int index,signed int item);
 void prepend(signed int item);
 void deleteAtIndex(signed int index);
 void removeItem(signed int item);//can remove multiple items of same value
-unsigned int find(signed int item) const; // return first index with item value
+signed int find(signed int item) const; // return first index with item value
 void updateValue(signed int index, signed int item);
 
 //protected:
 
 private:
-unsigned int capacity_{BASE_CAPACITY};
-unsigned int size_{BASE_SIZE}; 
+signed int capacity_{BASE_CAPACITY};
+signed int size_{BASE_SIZE}; 
 std::unique_ptr<signed int[]> data_; //array where int are stored
 
-void setCapacity(unsigned int wantedCapacity);
+void setCapacity(signed int wantedCapacity);
 void resizeCapacity();
 void increaseCapacity();
 void decreaseCapacity();
