@@ -26,12 +26,12 @@ int main (/*int argc, char* argv[]*/){
   assert(testingVector.getValue(0) == 0);
   assert(testingVector.getValue(1) == 1);
   assert(testingVector.getValue(2) == 2);
-  assert(testingVector.getValue(3) == (signed int) testingVector.getSize());
+  assert(testingVector.getValue(3) == testingVector.getSize());
 
   //asserting capacity and size behave like conceived
   assert(testingVector.getCapacity() == 16);
   assert(testingVector.getSize() == 3);
-  for (signed int i {(signed int) testingVector.getSize()} ,  end {(signed int) (3*practice::array::BASE_CAPACITY+testingVector.getSize())} ; i < end ; i++){
+  for (signed int i {testingVector.getSize()} ,  end {(3*practice::array::BASE_CAPACITY+testingVector.getSize())} ; i < end ; i++){
     std::cout << i << std::endl << end <<std:: endl << std::endl;
     testingVector.push(i);
     std::cout << testingVector.getValue(i) << std::endl << std::endl << std::endl;
@@ -47,11 +47,21 @@ int main (/*int argc, char* argv[]*/){
   // wrong behavior of deleteAtIndex
   testingVector.deleteAtIndex(10);
 
- // assert(testingVector.getSize() == 49);
-  std::cout << testingVector.getValue(2) << std::endl;
-  for (signed int i {0}; i<(signed int) testingVector.getSize(); i++){
-  std::cout << testingVector.getValue(i) << std::endl;}
-  assert(testingVector.getValue(2) == 3);
+  assert(testingVector.getSize() == 49);
+  //std::cout << testingVector.getValue(2) << std::endl;
+  for (signed int i {0}; i<testingVector.getSize(); i++){
+  std::cout << testingVector.getValue(i) << std::endl;
+  }
+  assert(testingVector.getValue(10) == 11);
+  assert(testingVector.getValue(5) == 5);
+
+  testingVector.insert(10, 5);
+  testingVector.removeItem(5);
+  for (signed int i {0}; i<testingVector.getSize(); i++){
+  std::cout << testingVector.getValue(i) << std::endl;
+  }
+  assert(testingVector.getValue(8) == 9);
+  assert(testingVector.getValue(12) == 14);
   return 0;
 }
 
@@ -63,4 +73,7 @@ when numbers are very high (or reduce max
 size of int for this specific test)
 
 in doubt, I will use only signed int
+
+
+indexes of an array are automatically unsigned long int, how to avoid warnings ? check doc
 */

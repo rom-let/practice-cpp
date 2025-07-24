@@ -14,12 +14,12 @@ MyVector::MyVector(signed int wantedCapacity){
   if(wantedCapacity > BASE_CAPACITY){
   MyVector::setCapacity(wantedCapacity);
   }
-  data_ = std::unique_ptr<int[]>(new int[capacity_]);
+  data_ = std::unique_ptr<signed int[]>(new signed int[capacity_]);
   std::cout << "Vector of capacity " <<  getCapacity() << " created\n";
 }
 
 MyVector::MyVector() {
-  data_ = std::unique_ptr<int[]>(new int[capacity_]);
+  data_ = std::unique_ptr<signed int[]>(new signed int[capacity_]);
   std::cout << "Vector of capacity " <<  getCapacity() << " created\n";
 } 
 
@@ -45,7 +45,7 @@ bool MyVector::isEmpty() const{
 //return size_ if out of bound
 signed int MyVector::getValue(signed int index) const{
   if(isValidIndex(index)){
-    return data_[index];
+    return (data_[index]);
   //return *(data_.get() + index); // learn more about this
   }
   return size_;
@@ -147,7 +147,7 @@ void MyVector::resizeCapacity(){
 
 void MyVector::increaseCapacity(){
   capacity_ <<= 1;
-  std::unique_ptr<int[]> new_data (new int[capacity_]);
+  std::unique_ptr<signed int[]> new_data (new signed int[capacity_]);
   for (signed int i{0};i <size_; i++ ){
     new_data[i] = data_[i];
   }
@@ -156,7 +156,7 @@ void MyVector::increaseCapacity(){
 
 void MyVector::decreaseCapacity(){
   capacity_ >>=1;
-  std::unique_ptr<int[]> new_data (new int[capacity_]);
+  std::unique_ptr<signed int[]> new_data (new signed int[capacity_]);
   for (signed int i{0};i <size_; i++ ){
     new_data[i] = data_[i];
   }
